@@ -3,7 +3,7 @@
     let allEmployeesData = []; // تخزين البيانات المحملة هنا
 
     // تحميل البيانات وتطبيق التصفية مباشرةً
-    fetch("simpledata.json")
+    fetch("Data/simpledata.json")
       .then((response) => response.json())
       .then((data) => {
         allEmployeesData = data; // تخزين البيانات في المتغير
@@ -192,19 +192,23 @@
       document.getElementById('loginForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
     validateLogin() ;
-        function validateLogin() {
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
-
-        // Example: Replace this with your authentication logic
-    if (username === '1' && password === '1') {
-          // Successful login, redirect to the next page
-    $('#loginModal').modal('hide');
-        } else {
-          // Invalid credentials
-          alert('Invalid username or password');
-        }
+    function validateLogin() {
+      const nationalID = document.getElementById('username').value;
+      const email = document.getElementById('password').value;
+  
+      // البحث عن المستخدم
+      const user = allEmployeesData.find(
+          (employee) => employee.EMail === email && employee.NationalID.toString() === nationalID
+      );
+  
+      if (user) {
+          // تسجيل الدخول ناجح
+          $('#loginModal').modal('hide');
+      } else {
+          // بيانات غير صحيحة
+          alert('البريد الإلكتروني أو الرقم القومي غير صحيح');
       }
+  }
         
     ;
       
